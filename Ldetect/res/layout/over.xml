@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+ android:orientation="horizontal"
+ android:layout_width="fill_parent"
+ android:layout_height="fill_parent"
+ android:background="@drawable/back"
+ 
+ 
+ >
+ 
+    
+<Button
+android:id="@+id/test"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Check"
+android:layout_marginTop="150dp"
+android:layout_marginLeft="100dp"
+android:rotation="270"
+
+
+
+
+/>
+
+<Button
+android:id="@+id/border"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Change Border"
+android:layout_marginTop="150dp"
+android:rotation="270"
+
+
+
+/>
+
+<Button
+android:id="@+id/paint"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:text="Paint App"
+android:layout_marginTop="150dp"
+android:rotation="270"
+/>
+    
+<TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+
+</LinearLayout>

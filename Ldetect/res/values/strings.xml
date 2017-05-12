@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Ldetect</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_sec">SecActivity</string>
+    <string name="title_activity_fetch">FetchActivity</string>
+    <string name="title_activity_shaval">Shaval</string>
+
+</resources>
