@@ -192,10 +192,10 @@ class OverlayView extends ViewGroup {
         	//canvas.drawBitmap(cursor,0,0,null);
             canvas.drawBitmap(cursor,px1,py1,null);
           //  canvas.drawBitmap(cursor,px2,py2,null);
-        	//canvas.drawBitmap(launcher,px3,py3,null);
-        	//canvas.drawBitmap(launcher,px4,py4,null);
-        	//canvas.drawBitmap(launcher2,px5,py5,null);
-        	//canvas.drawBitmap(launcher,px6,py6,null);
+        	canvas.drawBitmap(launcher,px3,py3,null);
+        	canvas.drawBitmap(launcher,px4,py4,null);
+        	canvas.drawBitmap(launcher2,px5,py5,null);
+        	canvas.drawBitmap(launcher,px6,py6,null);
         //	canvas.drawBitmap(cursor,270,350,null);
             
         }

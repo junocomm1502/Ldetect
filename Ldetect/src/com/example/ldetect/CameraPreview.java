@@ -521,13 +521,13 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
             x=r[9];
             y=r[10];
           //  Log.e("CameraPreview", "out_if_block"); 
-          /*  Canvas canvas=new Canvas(bitmap);
+            Canvas canvas=new Canvas(bitmap);
             Bitmap	img;
-            img = BitmapFactory.decodeResource(parent.getResources(), R.drawable.ic_launcher);
+            img = BitmapFactory.decodeResource(parent.getResources(), R.drawable.s);
             canvas.drawBitmap(img,r[0],r[1],null); 
             canvas.drawBitmap(img,r[2],r[3],null);
             canvas.drawBitmap(img,r[4],r[5],null);
-            canvas.drawBitmap(img,r[6],r[7],null);*/
+            canvas.drawBitmap(img,r[6],r[7],null);
             
          /*   float a=p1x-p4x;
 	   	    float b=p2y-p1y;
@@ -540,7 +540,7 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
 	      	int xi=(int) (768-yf);
 	      	int yi=(int) xf;*/
             
-         /*   p1x=768-r[1];
+          /*  p1x=768-r[1];
             p1y=r[0];
             p2x=768-r[3];
             p2y=r[2];
@@ -631,8 +631,8 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
 		    	ostatus=1;
 		    }*/
             
-           // TextView tv=(TextView)parent.findViewById(R.id.textView1);
-           // tv.setText("(sh1,sh2)"+sminh+","+smaxh+"(ss1,ss2)"+smins+","+smaxs+"(sv1,sv2)"+sminv+","+smaxv);
+            TextView tv=(TextView)parent.findViewById(R.id.textView1);
+            tv.setText("(Area-)"+r[11]);
             
             
             Button b2=(Button)parent.findViewById(R.id.test);
@@ -688,9 +688,11 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
             
             double cx = Math.sqrt(Math.pow( r[11]-r[9], 2) + Math.pow( r[12]-r[10], 2));
             
-            int xp=(r[9]*2),yp=(r[10]*2);
+          //  int xp=((768-r[10])*2),yp=(r[9]*2);
+            int xp=(r[9])*2,yp=(r[10]*2);
             
-            if(cx>100 && cx<250)
+     // /* ................new click     
+           if(r[11]<550 && r[11]!=0)
             {
             	try {
 					//Runtime.getRuntime().exec("adb shell");
@@ -714,7 +716,11 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
 					Runtime.getRuntime().exec("sendevent /dev/input/event2 3 57 4294967295");
 					Runtime.getRuntime().exec("sendevent /dev/input/event2 0 0 0");
 					
-					
+					try {
+						Thread.sleep(2000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					
 					
 					
@@ -722,7 +728,7 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-            }
+            }                //.........................new click*/
             
             
             if(borderst==0)
@@ -753,7 +759,7 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
             };
             nthread.run();*/
             	
-            
+            //	 m_CurService.Update(r[9],r[10],r[11],r[12], true,paintColor,800,480,parent,cx,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y);
             m_CurService.Update(r[9],r[10],r[11],r[12], true,paintColor,1180,768,parent,cx,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y);	
         //  m_CurService.Update(r[9],r[10],r[11],r[12], true,paintColor,1180,768,parent,cx,(768-p1y),p1x,(768-p2y),p2x,(768-p3y),p3x,(768-p4y),p4x);
             
@@ -762,7 +768,8 @@ public class CameraPreview implements SurfaceHolder.Callback, Camera.PreviewCall
             {
             	//Log.e("CameraPreview", "else");
             // m_CurService.Update(r[9],r[10],r[11],r[12], true,paintColor,768,1180,parent,cx,(768-p1y),p1x,(768-p2y),p2x,(768-p3y),p3x,(768-p4y),p4x);
-            m_CurService.Update(r[9],r[10],r[11],r[12], true,paintColor,768,1180,parent,cx,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y);	
+           m_CurService.Update(r[9],r[10],r[11],r[12], true,paintColor,768,1180,parent,cx,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y);	
+         //   m_CurService.Update(r[9],r[10],r[11],r[12], true,paintColor,480,800,parent,cx,p1x,p1y,p2x,p2y,p3x,p3y,p4x,p4y);
             }
             
             

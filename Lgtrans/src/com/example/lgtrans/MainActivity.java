@@ -565,8 +565,8 @@ public class MainActivity extends Activity implements BluetoothBroadcastReceiver
 	                	
 	                	
 	                   Translate.setKey(ApiKeys.YANDEX_API_KEY);
-	                	// OutputString = Translate.execute(matches.get(0).toString(), Language.ENGLISH, Language.HINDI);
-	                	 OutputString = Translate.execute("how are you".toString(), Language.ENGLISH, Language.HINDI);
+	                	 OutputString = Translate.execute(matches.get(0).toString(), Language.ENGLISH, Language.HINDI);
+	                	// OutputString = Translate.execute("how are you".toString(), Language.ENGLISH, Language.HINDI);
 	                } catch (Exception e) {
 	                    // TODO Auto-generated catch block
 	                    e.printStackTrace();

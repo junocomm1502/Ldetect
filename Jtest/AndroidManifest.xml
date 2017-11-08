@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ldetect"
+    package="com.example.jtest"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -44,20 +44,17 @@
 
         <service android:name=".CursoeService" >
             <intent-filter>
-                <action android:name="com.example.ldetect.CursoeService" />
+                <action android:name="com.example.jtest.CursoeService" />
             </intent-filter>
         </service>
-
+        
         <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_fetch"
+            android:label="@string/title_activity_main"
             android:screenOrientation="landscape" >
         </activity>
-        <activity
-            android:name=".Shaval"
-            android:label="@string/title_activity_shaval"
-            android:screenOrientation="landscape" >
-        </activity>
+
+        
     </application>
 
 </manifest>

@@ -176,6 +176,11 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
 			   py3=P3.y;
 			   px4=P4.x;
 			   py4=P4.y;
+
+			/*   cv::circle(mResult, Point(px1,py1), 4, cv::Scalar(0, 0, 255,255), 2);
+			   cv::circle(mResult, Point(px2,py2), 4, cv::Scalar(0, 0, 255,255), 2);
+			   cv::circle(mResult, Point(px3,py3), 4, cv::Scalar(0, 0, 255,255), 2);
+			   cv::circle(mResult, Point(px4,py4), 4, cv::Scalar(0, 0, 255,255), 2);*/
              }
 			/*   float a=P1.x-P4.x;
 			   float b=P2.y-P1.y;
@@ -612,7 +617,7 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
 
 	    	  //..............for hand 2..................
 
-	    	   cvtColor(mInput,rgba1,CV_YUV2BGR_NV21);
+	    	/*   cvtColor(mInput,rgba1,CV_YUV2BGR_NV21);
 	    	   threshold(rgba1, rgba1, 100, 255, cv::THRESH_BINARY);
 	    	   cvtColor(rgba1,hsv2,CV_RGB2HSV);
 
@@ -720,7 +725,7 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
 
 
 
-	    	   }
+	    	   }*/
 	    	  //   LOGE("cont= %d",cont);
 	    	  //  cv::circle(mResult, Point(hx,hy), 4, cv::Scalar(255, 0, 0,255), 2);
               /*  if(x==1)
@@ -774,9 +779,15 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
                 	if(px1!=0 && py1!=0 && px2!=0 && py2!=0 && px3!=0 && py3!=0 && px4!=0 && py4!=0)
                 	{
 
-                	//	cv::inRange(hsv, cv::Scalar(0,87,74), cv::Scalar(180,134,127), hsv);
-                		cv::inRange(hsv, cv::Scalar(0,s1-20,v1-20), cv::Scalar(180,s2+20,v2+20), hsv);
-                	// 	cv::inRange(hsv, cv::Scalar(0,76,70), cv::Scalar(180,134,123), hsv);
+                		//cv::inRange(hsv, cv::Scalar(104,21,62), cv::Scalar(172,101,129), hsv);
+                		cv::inRange(hsv, cv::Scalar(0,250,62), cv::Scalar(180,255,220), hsv);
+                	/*	LOGE("h1,h2= %d,%d",sh1,sh2);
+                		LOGE("s1,s2= %d,%d",ss1,ss2);
+                		LOGE("v1,v2= %d,%d",sv1,sv2);*/
+                	//	cv::inRange(hsv, cv::Scalar(sh1,ss1,sv1), cv::Scalar(sh2,ss2,sv2), hsv);
+                	//	cvtColor(hsv,mResult,CV_HSV2BGR);
+                	//	cv::inRange(hsv, cv::Scalar(0,s1-20,v1-20), cv::Scalar(180,s2+20,v2+20), hsv);
+                	 //	cv::inRange(hsv, cv::Scalar(0,76,70), cv::Scalar(180,134,123), hsv);
                    // cv::inRange(hsv, cv::Scalar(0,76,70), cv::Scalar(11,134,123), hsv);
                 	    	   	 int blurSize = 5;
                 	    	       int elementSize = 5;
@@ -810,12 +821,14 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
                 	    	   	{
                 	    	   		  std::vector<std::vector<cv::Point> > hull(1);
                 	    	   		  cv::convexHull(cv::Mat(contours[largestContour]), hull[0], false);
-                	    	   	//	  cv::drawContours(mResult, hull, 0, cv::Scalar(0, 0, 255,255), 3);
+                	    	   		  cv::drawContours(mResult, hull, 0, cv::Scalar(0, 0, 255,255), 3);
 
 
                 	    	   		  if (hull[0].size() > 2)
                 	    	   		 {
                 	    	   			x=1;
+                	    	   			LOGE("Area %f",contourArea(hull[0]));
+                	    	   			float area=contourArea(hull[0]);
                 	    	   		    std::vector<int> hullIndexes;
                 	    	   		    cv::convexHull(cv::Mat(contours[largestContour]), hullIndexes, true);
                 	    	   		  //  std::vector<cv::Vec4i> convexityDefects;
@@ -827,53 +840,76 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
                 	    	   		 //  cout<<result;
                 	    	   		  // cv::circle(mResult, result, 4, cv::Scalar(0, 0, 0,0), 2);
                 	    	   		 //cout<<hull[0];
+                	    	   		  double smx=10000,smy=0;
+                	    	   		for (size_t i = 0; i < hull[0].size(); i++)
+                	    	   	 {
+
+                	    	   		//smx=hull[0][i].x;
+                	    	   		//smy=hull[0][i].y;
+                	    	   		if(hull[0][i].x<smx)
+                	    	   		{
+                	    	   			smx=hull[0][i].x;
+                	    	   			smy=hull[0][i].y;
+                	    	   		}
+
+
+
+                	    	   	}
+
+
                 	    	   		   double res,mres=10000;
                 	    	   		  // cv::Point far;
            if(px3<px4)
      {
         	   float a=px4-px3;  //...............
-        	   //float b=py2-py1;
+        	  //float b=py2-py1;
         	   float b=py1-py4;
-        	   float c=480/a;
-        	   float d=640/b;
-        	   float xf=(hx-px3)*c;
-        	   float yf=(hy-py3)*d;
-        	   float xt=xf*1.6;
-        	   float yt=yf*2;
-        	   //float yt=yf*1.475;
-        	   // int xi=(int) xf;
-        	   //int yi=(int) yf;
-        	   int xi=(int) xt;
-        	   int yi=(int) yt;
-        	   jarr[9]=hx;          //........................
+        	   float c=768/a;
+        	   float d=1280/b;
+        	   float xf=(smx-px3)*c;
+        	   float yf=(smy-py3)*d;
+        	  // float xt=xf*1.6;
+        	  // float yt=yf*2;
+        	  //float yt=yf*1.475;
+        	 // int xi=(int) xf;
+        	  //int yi=(int) yf;
+        	   int xi=(int) xf;
+        	   int yi=(int) yf;
+        	   cv::circle(mResult, Point(smx,smy), 4, cv::Scalar(255, 0, 0,255), 2);
+        	   jarr[9]=xi;          //........................
         	   narr[9]=jarr[9];
-        	   jarr[10]=hy;
+        	   jarr[10]=yi;
         	   narr[10]=jarr[10];
-        	//   cv::circle(mResult, Point(hx,hy), 4, cv::Scalar(255, 0, 0,255), 2);
+        	   jarr[11]=area;          //........................
+        	   narr[11]=jarr[11];
+        	   //cv::circle(mResult, Point(hx,hy), 4, cv::Scalar(255, 0, 0,255), 2);
 
      }
            else if(py3>py4)
      {
         	   float a=px1-px4;  //...............
-        	   //float b=py2-py1;
+        	  //float b=py2-py1;
         	   float b=py3-py4;
-        	   float c=480/a;
-        	   float d=640/b;
-        	   float xf=(hx-px4)*c;
-        	   float yf=(hy-py4)*d;
-        	   float xt=xf*1.6;
-        	   float yt=yf*2;
+        	   float c=768/a;
+        	   float d=1280/b;
+        	   float xf=(smx-px4)*c;
+        	   float yf=(smy-py4)*d;
+        	  // float xt=xf*1.6;
+        	  // float yt=yf*2;
         	   //float yt=yf*1.475;
         	   // int xi=(int) xf;
-        	  //int yi=(int) yf;
-        	   int xi=(int) xt;
-        	   int yi=(int) yt;
-        	   jarr[9]=hx;          //........................
+        	   //int yi=(int) yf;
+        	   int xi=(int) xf;
+        	   int yi=(int) yf;
+        	   cv::circle(mResult, Point(smx,smy), 4, cv::Scalar(255, 0, 0,255), 2);
+        	   jarr[9]=xi;          //........................
         	   narr[9]=jarr[9];
-        	   jarr[10]=hy;
+        	   jarr[10]=yi;
         	   narr[10]=jarr[10];
+        	   jarr[11]=area;          //........................
+        	   narr[11]=jarr[11];
         	//   cv::circle(mResult, Point(hx,hy), 4, cv::Scalar(255, 0, 0,255), 2);
-     }
+   }
 
 
 
@@ -887,6 +923,8 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
                 	    	   			narr[9]=jarr[9];
                 	    	   			jarr[10]=0;
                 	    	   			narr[10]=jarr[10];
+                	    	   			jarr[11]=0;          //........................
+                	    	   			narr[11]=jarr[11];
                 	    	   		  }
 
                 	    	  // 	cv::circle(mResult, Point(far.x,far.y), 4, cv::Scalar(255, 0, 0,255), 2);
@@ -917,8 +955,8 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
         	 //  LOGE("up2x,p2y %d,%d",px2,py2);
         	 //  LOGE("up3x,p3y %d,%d",px3,py3);
         	 //  LOGE("up4x,p4y %d,%d",px4,py4);
-      //  cv::inRange(hsv1, cv::Scalar(0,ss1-20,sv1-20), cv::Scalar(180,ss2+20,sv2+20), hsv1);
-     	cv::inRange(hsv1, cv::Scalar(0,0,105), cv::Scalar(180,34,148), hsv1);
+        cv::inRange(hsv1, cv::Scalar(0,ss1-20,sv1-20), cv::Scalar(180,ss2+20,sv2+20), hsv1);
+     //	cv::inRange(hsv1, cv::Scalar(0,0,105), cv::Scalar(180,34,148), hsv1);
        // cv::inRange(hsv1(cv::Rect(px3,py3,(px4-px3),(py2-py3))), cv::Scalar(0,0,130), cv::Scalar(180,46,182), hsv1);
 
     /*    if(px3<px4)
@@ -964,7 +1002,7 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
       {
         std::vector<std::vector<cv::Point> > hull1(1);
         cv::convexHull(cv::Mat(contours1[largestContour1]), hull1[0], false);
-        cv::drawContours(mResult, hull1, 0, cv::Scalar(0, 0, 255,255), 3);
+      //  cv::drawContours(mResult, hull1, 0, cv::Scalar(0, 0, 255,255), 3);
 
 
         if (hull1[0].size() > 2)
@@ -992,11 +1030,11 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
 
 
     }
-        cv::circle(mResult, far1, 4, cv::Scalar(255, 0, 0,255), 2);
+       // cv::circle(mResult, far1, 4, cv::Scalar(255, 0, 0,255), 2);
 
        if(px3<px4)
       {
-   		float a=px4-px3;  //...............
+   		/*float a=px4-px3;  //...............
    	   //float b=py2-py1;
    	    float b=py1-py4;
    	    float c=480/a;
@@ -1009,17 +1047,17 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
    	   // int xi=(int) xf;
    	    //int yi=(int) yf;
    	    int xi=(int) xt;
-   	    int yi=(int) yt;
+   	    int yi=(int) yt;*/
 
-   	     jarr[11]=xi;          //........................
-   	     narr[11]=jarr[11];
-   	     jarr[12]=yi;
+   	   //  jarr[11]=0;          //........................
+   	   //  narr[11]=jarr[11];
+   	     jarr[12]=0;
    	     narr[12]=jarr[12];
 
      }
             else if(py3>py4)
                {
-            	 float a=px1-px4;  //...............
+            	/* float a=px1-px4;  //...............
                  //float b=py2-py1;
             	 float b=py3-py4;
             	 float c=480/a;
@@ -1032,11 +1070,11 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
                 // int xi=(int) xf;
                 //int yi=(int) yf;
             	 int xi=(int) xt;
-            	 int yi=(int) yt;
+            	 int yi=(int) yt;*/
 
-            	 jarr[11]=xi;          //........................
-            	 narr[11]=jarr[11];
-            	 jarr[12]=yi;
+            //	 jarr[11]=0;          //........................
+            //	 narr[11]=jarr[11];
+            	 jarr[12]=0;
             	 narr[12]=jarr[12];
                }
 
@@ -1045,8 +1083,8 @@ jintArray Java_com_example_ldetect_CameraPreview_ImageProcessing(
 
         else
         {
-             jarr[11]=0;          //........................
-             narr[11]=jarr[11];
+          //   jarr[11]=0;          //........................
+          //   narr[11]=jarr[11];
              jarr[12]=0;
              narr[12]=jarr[12];
         }
